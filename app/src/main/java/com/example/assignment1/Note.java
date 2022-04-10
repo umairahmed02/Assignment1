@@ -3,20 +3,25 @@ import java.time.LocalDate;
 
 public class Note {
 
-    String body, author, subject;
+    String body;
+    String author;
+    String subject;
+    String title;
     LocalDate dateCreated;
 
-    public Note(String b, String a, String s, LocalDate d) {
+    public Note(String b, String a, String s, String t, LocalDate d) {
         this.setBody(b);
         this.setAuthor(a);
         this.setSubject(s);
+        this.setTitle(t);
         this.setDateCreated(d);
     }
 
-    public Note(String b) {
+    public Note(String b, String t) {
         this.setBody(b);
         this.setAuthor("Sue Donym");
         this.setSubject("Subject1");
+        this.setTitle(t);
         this.setDateCreated(LocalDate.now());
     }
 
@@ -24,6 +29,7 @@ public class Note {
         this.setBody("My Note");
         this.setAuthor("Sue Donym");
         this.setSubject("Subject1");
+        this.setTitle("New Note");
         this.setDateCreated(LocalDate.now());
     }
 
@@ -50,6 +56,10 @@ public class Note {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+    public String getTitle() { return title; }
+
+    public void setTitle(String title) {this.title = title; }
 
     public LocalDate getDateCreated() {
         return dateCreated;
