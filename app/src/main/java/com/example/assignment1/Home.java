@@ -66,7 +66,8 @@ public class Home extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home) {
-            this.finish();
+            Intent intent = new Intent(Home.this, StartScreen.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
