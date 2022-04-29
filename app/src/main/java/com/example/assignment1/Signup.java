@@ -38,10 +38,7 @@ public class Signup extends AppCompatActivity {
                 pass = password.getText().toString();
                 passConfirm = passwordConfirm.getText().toString();
 
-                if(!(pass == passConfirm)) {
-                    Toast.makeText(Signup.this, "Passwords are not matching please try again", Toast.LENGTH_SHORT).show();
-                }
-                else if(user.length() < 5 && pass.length() < 8) {
+                if(user.length() < 5 && pass.length() < 8) {
                     Toast.makeText(Signup.this, "Username and Password not of sufficient length", Toast.LENGTH_SHORT).show();
                 }
                 else if(user.length() < 5) {
@@ -49,6 +46,12 @@ public class Signup extends AppCompatActivity {
                 }
                 else if(pass.length() < 8) {
                     Toast.makeText(Signup.this, "Password is not of sufficient length", Toast.LENGTH_SHORT).show();
+                }
+                else if(passConfirm.length() < 8) {
+                    Toast.makeText(Signup.this, "Confirm password is not of sufficient length", Toast.LENGTH_SHORT).show();
+                }
+                else if(!(pass.equals(passConfirm))) {
+                    Toast.makeText(Signup.this, "Password: " + pass + "Confirm Password: " + passConfirm, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent intent = new Intent(Signup.this, StartScreen.class);
