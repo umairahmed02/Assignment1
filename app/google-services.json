@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "594315804258",
+    "project_id": "weltec-note-sharing",
+    "storage_bucket": "weltec-note-sharing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594315804258:android:7ad8dc1cf92507da539b3b",
+        "android_client_info": {
+          "package_name": "com.example.assignment1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594315804258-9qarkfcadp5mdo0730roamibsnopebjb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.assignment1",
+            "certificate_hash": "5ae75344f5e442949e1d706c8e0ec9d515e63020"
+          }
+        },
+        {
+          "client_id": "594315804258-bhud6cme6gv4f242kh2t20la4e83l5ld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf7IhAj83bToBIpF7Ku60A9EkvyIAFxIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594315804258-bhud6cme6gv4f242kh2t20la4e83l5ld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
