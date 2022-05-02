@@ -5,4 +5,5 @@
     <string name="publish">Publish</string>
     <string name="title">Title</string>
     <string name="note">Note</string>
+    <string name="email">Email</string>
 </resources>

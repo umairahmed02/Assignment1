@@ -11,17 +11,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Signup extends AppCompatActivity {
 
-    EditText username, password, passwordConfirm;
+    EditText username, password, passwordConfirm, email;
     ImageView img_signup;
-    String user, pass, passConfirm;
+    String user, pass, passConfirm, mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        email = findViewById(R.id.txt_email);
         username = findViewById(R.id.txt_username);
         password = findViewById(R.id.txt_password);
         passwordConfirm = findViewById(R.id.txt_password_confirm);
@@ -37,6 +41,7 @@ public class Signup extends AppCompatActivity {
                 user = username.getText().toString();
                 pass = password.getText().toString();
                 passConfirm = passwordConfirm.getText().toString();
+                mail = email.getText().toString();
 
                 if(user.length() < 5 && pass.length() < 8) {
                     Toast.makeText(Signup.this, "Username and Password not of sufficient length", Toast.LENGTH_SHORT).show();
@@ -51,9 +56,16 @@ public class Signup extends AppCompatActivity {
                     Toast.makeText(Signup.this, "Confirm password is not of sufficient length", Toast.LENGTH_SHORT).show();
                 }
                 else if(!(pass.equals(passConfirm))) {
-                    Toast.makeText(Signup.this, "Password: " + pass + "Confirm Password: " + passConfirm, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Signup.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                }
+                else if(!(mail.contains("@"))) {
+                    Toast.makeText(Signup.this, "Email is not valid", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    User newUser = new User(user, pass, mail);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    CollectionReference dbUser = db.collection("User");
+                    dbUser.add(newUser);
                     Intent intent = new Intent(Signup.this, StartScreen.class);
                     startActivity(intent);
                 }
