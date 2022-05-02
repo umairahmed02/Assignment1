@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Login extends AppCompatActivity {
 
     EditText username, password;
@@ -36,14 +39,10 @@ public class Login extends AppCompatActivity {
                 user = username.getText().toString();
                 pass = password.getText().toString();
 
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                 if(user.length() < 5 && pass.length() < 8) {
                     Toast.makeText(Login.this, "Username and Password not of sufficient length", Toast.LENGTH_SHORT).show();
-                }
-                else if(user.length() < 5) {
-                    Toast.makeText(Login.this, "Username is not of sufficient length", Toast.LENGTH_SHORT).show();
-                }
-                else if(pass.length() < 8) {
-                    Toast.makeText(Login.this, "Password is not of sufficient length", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent intent = new Intent(Login.this, Home.class);

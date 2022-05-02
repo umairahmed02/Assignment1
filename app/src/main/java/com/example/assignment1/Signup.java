@@ -11,8 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Signup extends AppCompatActivity {
 
@@ -61,13 +64,26 @@ public class Signup extends AppCompatActivity {
                 else if(!(mail.contains("@"))) {
                     Toast.makeText(Signup.this, "Email is not valid", Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    User newUser = new User(user, pass, mail);
+                else{
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    CollectionReference dbUser = db.collection("User");
-                    dbUser.add(newUser);
-                    Intent intent = new Intent(Signup.this, StartScreen.class);
-                    startActivity(intent);
+                    db.collection("User")
+                            .whereEqualTo("username", user)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()) {
+                                        Toast.makeText(Signup.this, "Username already exists please try again", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        User newUser = new User(user, pass, mail);
+                                        CollectionReference dbUser = db.collection("User");
+                                        dbUser.add(newUser);
+                                        Intent intent = new Intent(Signup.this, StartScreen.class);
+                                        startActivity(intent);
+                                }
+                            }
+                    });
                 }
             }
         });
