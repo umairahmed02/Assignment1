@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -59,6 +60,7 @@ public class Login extends AppCompatActivity {
                                         User newUser = new User(document.getString("username"), document.getString("password"), document.getString("email"));
                                         if(newUser.getPassword().equals(pass)) {
                                             Intent intent = new Intent(Login.this, Home.class);
+                                            intent.putExtra("user", (Parcelable) newUser);
                                             startActivity(intent);
                                         }
                                         else {
