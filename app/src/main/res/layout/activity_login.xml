@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:hint="@string/uemail"
+        android:hint="@string/username"
         />
 
     <EditText
