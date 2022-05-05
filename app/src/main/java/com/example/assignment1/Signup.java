@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -22,6 +23,8 @@ public class Signup extends AppCompatActivity {
     EditText username, password, passwordConfirm, email;
     ImageView img_signup;
     String user, pass, passConfirm, mail;
+    int matches;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class Signup extends AppCompatActivity {
                     Toast.makeText(Signup.this, "Email is not valid", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    matches = 0;
                     db.collection("User")
                             .whereEqualTo("username", user)
                             .get()
@@ -73,14 +76,22 @@ public class Signup extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if(task.isSuccessful()) {
-                                        Toast.makeText(Signup.this, "Username already exists please try again", Toast.LENGTH_SHORT).show();
+                                        for(DocumentSnapshot document : task.getResult()) {
+                                            if(document.getString("username").equals(user)) {
+                                                Toast.makeText(Signup.this, "This username already exists", Toast.LENGTH_SHORT).show();
+                                                matches++;
+                                            }
+                                        }
+                                        if(matches == 0) {
+                                            User newUser = new User(user, pass, mail);
+                                            CollectionReference dbUser = db.collection("User");
+                                            dbUser.add(newUser);
+                                            Intent intent = new Intent(Signup.this, StartScreen.class);
+                                            startActivity(intent);
+                                        }
                                     }
                                     else {
-                                        User newUser = new User(user, pass, mail);
-                                        CollectionReference dbUser = db.collection("User");
-                                        dbUser.add(newUser);
-                                        Intent intent = new Intent(Signup.this, StartScreen.class);
-                                        startActivity(intent);
+                                        Toast.makeText(Signup.this, "Connection to database not secured", Toast.LENGTH_SHORT).show();
                                 }
                             }
                     });
