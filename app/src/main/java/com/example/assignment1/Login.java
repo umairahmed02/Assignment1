@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Login extends AppCompatActivity {
 
@@ -40,17 +44,39 @@ public class Login extends AppCompatActivity {
                 pass = password.getText().toString();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                if(user.length() < 5 && pass.length() < 8) {
-                    Toast.makeText(Login.this, "Username and Password not of sufficient length", Toast.LENGTH_SHORT).show();
+                if(user.equals("")) {
+                    Toast.makeText(Login.this, "Do not keep username field empty", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Intent intent = new Intent(Login.this, Home.class);
-                    startActivity(intent);
+                    db.collection("User")
+                            .whereEqualTo("username", user)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                        User newUser = new User(document.getString("username"), document.getString("password"), document.getString("email"));
+                                        if(newUser.getPassword().equals(pass)) {
+                                            Intent intent = new Intent(Login.this, Home.class);
+                                            startActivity(intent);
+                                        }
+                                        else {
+                                            Toast.makeText(Login.this, "Username and password do not match", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    else {
+                                        Toast.makeText(Login.this, "No user with the username " + user + " was found", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
+
             }
         });
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
