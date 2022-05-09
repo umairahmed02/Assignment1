@@ -17,6 +17,14 @@ public class Note {
         this.setDateCreated(d);
     }
 
+    public Note(String b, String s, String t, String d) {
+        this.setBody(b);
+        this.setAuthor("Admin");
+        this.setSubject(s);
+        this.setTitle(t);
+        this.setDateCreated(d);
+    }
+
     public Note(String b, String t) {
         this.setBody(b);
         this.setAuthor("Sue Donym");

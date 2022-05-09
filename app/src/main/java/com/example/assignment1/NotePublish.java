@@ -13,6 +13,8 @@ import android.widget.EditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.time.LocalDate;
+
 public class NotePublish extends AppCompatActivity {
 
     EditText txtNote, txtTitle;
@@ -35,12 +37,11 @@ public class NotePublish extends AppCompatActivity {
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Note note = new Note(txtNote.getText().toString(), txtTitle.getText().toString());
-                CollectionReference dbNote = db.collection("Note");
-                dbNote.add(note);
-
                 Intent inboundIntent = getIntent();
                 String activity = inboundIntent.getStringExtra("Activity");
+                Note note = new Note(txtNote.getText().toString(), activity, txtTitle.getText().toString(), LocalDate.now().toString());
+                CollectionReference dbNote = db.collection("Note");
+                dbNote.add(note);
 
                 switch(activity) {
                     case "Subject1":
