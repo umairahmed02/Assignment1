@@ -39,7 +39,7 @@ public class NotePublish extends AppCompatActivity {
             public void onClick(View view) {
                 Intent inboundIntent = getIntent();
                 String activity = inboundIntent.getStringExtra("Activity");
-                Note note = new Note(txtNote.getText().toString(), activity, txtTitle.getText().toString(), LocalDate.now().toString());
+                Note note = new Note(txtNote.getText().toString(), User.getInstance("u", "p", "e").username, activity, txtTitle.getText().toString(), LocalDate.now().toString());
                 CollectionReference dbNote = db.collection("Note");
                 dbNote.add(note);
 

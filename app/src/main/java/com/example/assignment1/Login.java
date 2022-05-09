@@ -59,6 +59,7 @@ public class Login extends AppCompatActivity {
                                         DocumentSnapshot document = task.getResult().getDocuments().get(0);
                                         User newUser = new User(document.getString("username"), document.getString("password"), document.getString("email"));
                                         if(newUser.getPassword().equals(pass)) {
+                                            User user = User.getInstance(newUser.username, newUser.password, newUser.email);
                                             Intent intent = new Intent(Login.this, Home.class);
                                             //intent.putExtra("user", (Parcelable) newUser);
                                             startActivity(intent);

@@ -4,6 +4,8 @@ public class User {
 
     String username, password, email;
 
+    private static User userInstance = null;
+
     public User(String u, String p, String e) {
         this.setUsername(u);
         this.setPassword(p);
@@ -14,6 +16,13 @@ public class User {
         this.setUsername("test1234");
         this.setPassword("test1234");
         this.setEmail("test@gmail.com");
+    }
+
+    public static User getInstance(String u, String p, String e) {
+        if(userInstance == null) {
+            userInstance = new User(u, p, e);
+        }
+        return userInstance;
     }
 
     public String getEmail() { return email; }
