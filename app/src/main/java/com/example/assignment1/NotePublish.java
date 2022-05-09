@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class NotePublish extends AppCompatActivity {
 
     EditText txtNote, txtTitle;
     Button btnPublish;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class NotePublish extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Note note = new Note(txtNote.getText().toString(), txtTitle.getText().toString());
+                CollectionReference dbNote = db.collection("Note");
+                dbNote.add(note);
+
                 Intent inboundIntent = getIntent();
                 String activity = inboundIntent.getStringExtra("Activity");
 

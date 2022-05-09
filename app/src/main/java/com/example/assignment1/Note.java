@@ -7,9 +7,9 @@ public class Note {
     String author;
     String subject;
     String title;
-    LocalDate dateCreated;
+    String dateCreated;
 
-    public Note(String b, String a, String s, String t, LocalDate d) {
+    public Note(String b, String a, String s, String t, String d) {
         this.setBody(b);
         this.setAuthor(a);
         this.setSubject(s);
@@ -22,7 +22,7 @@ public class Note {
         this.setAuthor("Sue Donym");
         this.setSubject("Subject1");
         this.setTitle(t);
-        this.setDateCreated(LocalDate.now());
+        this.setDateCreated(LocalDate.now().toString());
     }
 
     public Note() {
@@ -30,7 +30,7 @@ public class Note {
         this.setAuthor("Sue Donym");
         this.setSubject("Subject1");
         this.setTitle("New Note");
-        this.setDateCreated(LocalDate.now());
+        this.setDateCreated(LocalDate.now().toString());
     }
 
     public String getBody() {
@@ -61,11 +61,11 @@ public class Note {
 
     public void setTitle(String title) {this.title = title; }
 
-    public LocalDate getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDate dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 }

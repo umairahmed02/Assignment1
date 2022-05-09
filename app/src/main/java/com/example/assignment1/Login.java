@@ -60,7 +60,7 @@ public class Login extends AppCompatActivity {
                                         User newUser = new User(document.getString("username"), document.getString("password"), document.getString("email"));
                                         if(newUser.getPassword().equals(pass)) {
                                             Intent intent = new Intent(Login.this, Home.class);
-                                            intent.putExtra("user", (Parcelable) newUser);
+                                            //intent.putExtra("user", (Parcelable) newUser);
                                             startActivity(intent);
                                         }
                                         else {
