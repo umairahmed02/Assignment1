@@ -7,4 +7,8 @@
     <string name="title">Title</string>
     <string name="note">Note</string>
     <string name="email">Email</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="date_created">Date Created</string>
+    <string name="body">Body</string>
 </resources>
