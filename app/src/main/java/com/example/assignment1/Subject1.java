@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,10 +30,26 @@ public class Subject1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject1);
-
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        retrieveNotes();
-        //Log.v("Arraysfinal", noteArrayList.get(0).getBody());
+
+        btnAdd = findViewById(R.id.btn_add);
+        db.collection("Note")
+                .whereEqualTo("subject", "Subject1")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.v("Arraysize", task.getResult().getDocuments().toString());
+                        for(int i = 0; i < task.getResult().getDocuments().size(); i++) {
+                            DocumentSnapshot document = task.getResult().getDocuments().get(i);
+                            Note note = new Note(document.getString("body"), document.getString("author"), document.getString("subject"), document.getString("title"), document.getString("dateCreated"));
+                            noteArrayList.add(note);
+                            Log.v("Arraysnote", note.getBody());
+                        }
+                        Log.v("Arraysnotesize", noteArrayList.toString());
+                    }
+                });
+        Log.v("Arraysfinal", noteArrayList.toString());
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, noteArrayList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -42,8 +57,6 @@ public class Subject1 extends AppCompatActivity {
         getSupportActionBar().setTitle("Subject1");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        btnAdd = findViewById(R.id.btn_add);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,24 +78,5 @@ public class Subject1 extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void retrieveNotes() {
-        db.collection("Note")
-                .whereEqualTo("subject", "Subject1")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.v("Arraysize", task.getResult().getDocuments().toString());
-                        for(int i = 0; i < task.getResult().getDocuments().size(); i++) {
-                            DocumentSnapshot document = task.getResult().getDocuments().get(i);
-                            Note note = new Note(document.getString("body"), document.getString("author"), document.getString("subject"), document.getString("title"), document.getString("dateCreated"));
-                            noteArrayList.add(note);
-                            Log.v("Arraysnote", note.getBody());
-                        }
-                        Log.v("Arraysnotesize", noteArrayList.toString());
-                    }
-                });
     }
 }
