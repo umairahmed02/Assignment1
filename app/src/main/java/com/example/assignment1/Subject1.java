@@ -62,17 +62,20 @@ public class Subject1 extends AppCompatActivity {
                         for(int i = 0; i < task.getResult().getDocuments().size(); i++) {
                             DocumentSnapshot document = task.getResult().getDocuments().get(i);
                             Note note = new Note(document.getString("body"), document.getString("author"), document.getString("subject"), document.getString("title"), document.getString("dateCreated"));
-                            noteArrayList.add(note);
+
                             Log.v("Arraysnote", note.getBody());
+                            RecyclerView recyclerView = findViewById(R.id.recycler_view);
+                            Log.v("Arraysnotesize", noteArrayList.toString());
+                            Log.v("Arraysfinal", noteArrayList.toString());
+                            noteArrayList.add(note);
+                            RecyclerViewAdapter adapter = new RecyclerViewAdapter(Subject1.this, noteArrayList);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(Subject1.this));
                         }
-                        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-                        Log.v("Arraysnotesize", noteArrayList.toString());
-                        Log.v("Arraysfinal", noteArrayList.toString());
-                        RecyclerViewAdapter adapter = new RecyclerViewAdapter(Subject1.this, noteArrayList);
-                        recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(Subject1.this));
+
                     }
-                });
+                }
+                );
 
         getSupportActionBar().setTitle("Subject1");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
