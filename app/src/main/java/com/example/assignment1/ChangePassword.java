@@ -39,16 +39,13 @@ public class ChangePassword extends AppCompatActivity {
                 String confirmPass = confirmPassword.getText().toString();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                if(pass.length() < 8) {
+                if (pass.length() < 8) {
                     Toast.makeText(ChangePassword.this, "Password is not of sufficient length", Toast.LENGTH_SHORT).show();
-                }
-                else if(confirmPass.length() < 8) {
+                } else if (confirmPass.length() < 8) {
                     Toast.makeText(ChangePassword.this, "Confirm password is not of sufficient length", Toast.LENGTH_SHORT).show();
-                }
-                else if(!(pass.equals(confirmPass))) {
+                } else if (!(pass.equals(confirmPass))) {
                     Toast.makeText(ChangePassword.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     db.collection("User")
                             .whereEqualTo("username", User.getInstance("u", "p", "e").getUsername())
                             .get()
@@ -60,8 +57,11 @@ public class ChangePassword extends AppCompatActivity {
                                         //document.get("password") = pass;
                                     }
                                 }
+                            });
+                }
+
+
+            }
         });
     }
-
-
 }
