@@ -16,6 +16,7 @@ public class User {
         this.setUsername("test1234");
         this.setPassword("test1234");
         this.setEmail("test@gmail.com");
+
     }
 
     public static User getInstance(String u, String p, String e) {

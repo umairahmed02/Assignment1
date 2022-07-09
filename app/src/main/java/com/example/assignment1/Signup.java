@@ -69,32 +69,10 @@ public class Signup extends AppCompatActivity {
                 }
                 else{
                     matches = 0;
-                    db.collection("User")
-                            .whereEqualTo("username", user)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(task.isSuccessful()) {
-                                        for(DocumentSnapshot document : task.getResult()) {
-                                            if(document.getString("username").equals(user)) {
-                                                Toast.makeText(Signup.this, "This username already exists", Toast.LENGTH_SHORT).show();
-                                                matches++;
-                                            }
-                                        }
-                                        if(matches == 0) {
-                                            User newUser = new User(user, pass, mail);
-                                            CollectionReference dbUser = db.collection("User");
-                                            dbUser.add(newUser);
-                                            Intent intent = new Intent(Signup.this, StartScreen.class);
-                                            startActivity(intent);
-                                        }
-                                    }
-                                    else {
-                                        Toast.makeText(Signup.this, "Connection to database not secured", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                    });
+                    User newUser = new User(user, pass, mail);
+                    db.collection("User").document(newUser.username).set(newUser);
+                    Intent intent = new Intent(Signup.this, Home.class);
+                    startActivity(intent);
                 }
             }
         });

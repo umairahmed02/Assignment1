@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class Subject4 extends AppCompatActivity {
 
-    Button btnAdd;
+    Button btnAdd, btnEdit;
     ArrayList <Note> noteArrayList = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Query query = db.collection("Note").whereEqualTo("subject", "Subject4");
@@ -52,6 +52,7 @@ public class Subject4 extends AppCompatActivity {
         setContentView(R.layout.activity_subject4);
 
         btnAdd = findViewById(R.id.btn_add);
+        btnEdit = findViewById(R.id.btn_edit);
         db.collection("Note")
                 .whereEqualTo("subject", "Subject4")
                 .get()
@@ -85,6 +86,15 @@ public class Subject4 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Subject4.this, NotePublish.class);
+                intent.putExtra("Activity", "Subject4");
+                startActivity(intent);
+            }
+        });
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Subject4.this, NoteEdit.class);
                 intent.putExtra("Activity", "Subject4");
                 startActivity(intent);
             }

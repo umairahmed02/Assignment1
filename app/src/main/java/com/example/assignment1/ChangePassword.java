@@ -45,19 +45,13 @@ public class ChangePassword extends AppCompatActivity {
                     Toast.makeText(ChangePassword.this, "Confirm password is not of sufficient length", Toast.LENGTH_SHORT).show();
                 } else if (!(pass.equals(confirmPass))) {
                     Toast.makeText(ChangePassword.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                } else {
-                    db.collection("User")
-                            .whereEqualTo("username", User.getInstance("u", "p", "e").getUsername())
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                                        //document.get("password") = pass;
-                                    }
-                                }
-                            });
+                } else if(!(oldPass.toString().equals(User.getInstance("u", "p", "e").password))) {
+                    Toast.makeText(ChangePassword.this, "The old password is not correct", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    db.collection("User").document(User.getInstance("u", "p", "e").username).set(new User(User.getInstance("u", "p", "e").username, pass, User.getInstance("u", "p", "e").email));
+                    Intent intent = new Intent(ChangePassword.this, StartScreen.class);
+                    startActivity(intent);
                 }
 
 

@@ -3,11 +3,20 @@ import java.time.LocalDate;
 
 public class Note {
 
+    private static Note noteInstance = null;
+
     String body;
     String author;
     String subject;
     String title;
     String dateCreated;
+
+    public static Note getInstance(String b, String a, String s, String t, String d) {
+        if(noteInstance == null) {
+            noteInstance = new Note(b, a, s, t, d);
+        }
+        return noteInstance;
+    }
 
     public Note(String b, String a, String s, String t, String d) {
         this.setBody(b);

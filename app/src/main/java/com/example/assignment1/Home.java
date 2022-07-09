@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Home extends AppCompatActivity {
 
     ImageView img_subject1, img_subject2, img_subject3, img_subject4;
+    Button changeButton, deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,9 @@ public class Home extends AppCompatActivity {
         img_subject2 = findViewById(R.id.img_subject2);
         img_subject3 = findViewById(R.id.img_subject3);
         img_subject4 = findViewById(R.id.img_subject4);
+
+        changeButton = findViewById(R.id.change_password);
+        deleteButton = findViewById(R.id.delete_account);
 
         img_subject1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +62,24 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, Subject4.class);
+                startActivity(intent);
+            }
+        });
+
+        changeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, ChangePassword.class);
+                startActivity(intent);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("User").document(User.getInstance("u", "p", "e").username).delete();
+                Intent intent = new Intent(Home.this, StartScreen.class);
                 startActivity(intent);
             }
         });

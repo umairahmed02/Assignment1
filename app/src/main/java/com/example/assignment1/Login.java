@@ -43,8 +43,11 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 user = username.getText().toString();
                 pass = password.getText().toString();
-                if(user.equals("umair"))
-                /*FirebaseFirestore db = FirebaseFirestore.getInstance();
+                /*if(user.equals("umair")) {
+                    Intent intent = new Intent(Login.this, Home.class);
+                    startActivity(intent);
+                }*/
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
                 if(user.equals("")) {
                     Toast.makeText(Login.this, "Do not keep username field empty", Toast.LENGTH_SHORT).show();
                 }
@@ -74,7 +77,7 @@ public class Login extends AppCompatActivity {
                                 }
                             });
                 }
-                */
+
             }
         });
     }

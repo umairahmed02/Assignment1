@@ -1,13 +1,17 @@
 package com.example.assignment1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -15,6 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     ArrayList<Note> notes;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public RecyclerViewAdapter(Context context, ArrayList<Note> notes) {
         this.context = context;
@@ -42,9 +47,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return notes.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, body, author, dateCreated;
+        Button btnDelete;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,6 +60,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             body = itemView.findViewById(R.id.txt_body);
             author = itemView.findViewById(R.id.txt_author);
             dateCreated = itemView.findViewById(R.id.txt_dateCreated);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
+
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    db.collection("Note").document(title.getText().toString()).delete();
+                }
+            });
 
         }
     }
